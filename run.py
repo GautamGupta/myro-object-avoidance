@@ -15,7 +15,7 @@ while done == 0:
     if getObstacle("center") < 5:
         done = 1
 
-turnLeft(1, 0.2)                        #turns a wee bit extra
+#turnLeft(1, 0)                          #turns a wee bit extra
 forward(1)                              #goes forward till clear path on right
 done = 0
 
@@ -23,17 +23,17 @@ while done == 0:
     if getObstacle("right") < 5:
         done = 1
 
-forward(1, 1.8)                         #forward a wee bit extra
-turnRight(1, 1.1)                       #90 degree right turn
+forward(1, 0.8)                         #forward a wee bit extra
+turnRight(1, 0.65)                       #90 degree right turn
 forward(1)                              #goes forward till clear path on right
 done = 0
 
 while done == 0:
-    if getObstacle("right") < 5:
+    if getObstacle("right") < 1:
         done = 1
 
-forward(1, 1.8)                         #forward a wee bit extra
-turnRight(1, 1.1)                       #90 degree right turn
+forward(1, 0.8)                         #forward a wee bit extra
+turnRight(1, 0.65)                       #90 degree right turn
 forward(1, 3)                           #forward back to middle of boxish
-turnLeft(1, 1.1)                        #90 degree left turn
+turnLeft(1, 0.65)                        #90 degree left turn
 forward(1, 3)                           #hey look im back on the path
