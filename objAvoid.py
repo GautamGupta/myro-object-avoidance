@@ -19,7 +19,7 @@ init("/dev/tty.Fluke2-052F-Fluke2")
 class Guatmobile:
 
 	# Setting parameter variables
-	motorPower = 1
+	motorPower = 0.5
 	leftTime = 0.64
 	rightTime = 0.66
 	forwardTime = 0.5
@@ -77,15 +77,16 @@ class Guatmobile:
 # -------------------- Start of Run Sequence ----------------------
 
 # Main function that runs the sequence for the robot
-def run(left = 0.647, right = 0.658, forwards = 0.6, upper = 4500, lower = 5):
+def run(power = 1, left = 0.647, right = 0.658, forwards = 0.6, upper = 2000, lower = 5):
 
 	# Initialize
 	robot = Guatmobile()
 
+	robot.motorPower = power
 	robot.leftTime = left
 	robot.rightTime = right
 	robot.forwardTime = forwards
-	robot.istanceUpper = upper
+	robot.distanceUpper = upper
 	robot.distanceLower = lower
 
 	# Drive forward until detects wall
@@ -99,6 +100,10 @@ def run(left = 0.647, right = 0.658, forwards = 0.6, upper = 4500, lower = 5):
 	robot.delayLeft()
 	print "Time of turn: {}".format(robot.endTime())
 
+	# Extra turn for angled
+	if robot.motorPower != 1:
+		turnLeft(robot.motorPower, 0.075)
+
 	# Each counter represents turning around the corner of the box
 	while robot.counter < 2:
 		robot.bitForward()
@@ -109,7 +114,7 @@ def run(left = 0.647, right = 0.658, forwards = 0.6, upper = 4500, lower = 5):
 			robot.bitForward()
 
 	robot.bitForward()
-	turnLeft(robot.motorPower, 2 * robot.leftTime - (robot.turnTime + 0.15))
+	turnLeft(robot.motorPower, 2 * robot.leftTime - (robot.turnTime + 0.15 / robot.motorPower))
 	forward(robot.motorPower, 2)
 	# Turn back to correct angle
 
@@ -123,7 +128,7 @@ while finished == 0:
 
 	# Mode for third part
 	if select == 'a':
-		run(0.647, 0.658, 0.6, 500, 5)
+		run(0.5, 1.37, 1.38, 1.2, 1000, 5)
 
 	# Mode for first two parts
 	elif select == 'r':
