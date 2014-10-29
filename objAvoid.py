@@ -58,34 +58,26 @@ class Guatmobile:
 		self.rightRight()
 		if getObstacle("center") > self.distanceUpper:
 			value = True
-		turnLeft(self.motorPower)
-		self.delayLeft()
-		stop()
+		self.leftRight()
 		return value
 
 	# Delaying functions
 	def delayForward(self):
 		while self.done == 0:
-			if getObstacle(1) > self.distanceUpper:
+			if getObstacle("center") > self.distanceUpper:
 				self.done = 1
 		self.done = 0
 
 	def delayLeft(self):
 		while self.done == 0:
-			if getObstacle(2) < self.distanceLower:
-				self.done = 1
-		self.done = 0
-
-	def delayRight(self):
-		while self.done == 0:
-			if getObstacle(2) > self.distanceLower:
+			if getObstacle("right") < self.distanceLower:
 				self.done = 1
 		self.done = 0
 
 # -------------------- Start of Run Sequence ----------------------
 
 # Main function that runs the sequence for the robot
-def run(left = 0.65, right = 0.40, forwards = 0.5, upper = 3000, lower = 5):
+def run(left = 0.647, right = 0.658, forwards = 0.6, upper = 4500, lower = 5):
 
 	# Initialize
 	robot = Guatmobile()
@@ -101,8 +93,11 @@ def run(left = 0.65, right = 0.40, forwards = 0.5, upper = 3000, lower = 5):
 	robot.delayForward()
 
 	# Turn left until no longer detects wall
+	# Check times it takes to turn parallel to wall
 	turnLeft(robot.motorPower)
+	robot.startTime()
 	robot.delayLeft()
+	print "Time of turn: {}".format(robot.endTime())
 
 	# Each counter represents turning around the corner of the box
 	while robot.counter < 2:
@@ -114,7 +109,8 @@ def run(left = 0.65, right = 0.40, forwards = 0.5, upper = 3000, lower = 5):
 			robot.bitForward()
 
 	robot.bitForward()
-
+	turnLeft(robot.motorPower, 2 * robot.leftTime - (robot.turnTime + 0.15))
+	forward(robot.motorPower, 2)
 	# Turn back to correct angle
 
 # -------------------- End of Run Sequence ----------------------
@@ -123,19 +119,14 @@ def run(left = 0.65, right = 0.40, forwards = 0.5, upper = 3000, lower = 5):
 finished = 0
 
 while finished == 0:
-	select = raw_input("Enter 's' to select parameters\nEnter 'd' to run default values\nEnter 'q' to quit program\n")
+	select = raw_input("Enter 'a' to select angled\nEnter 'r' to select right angle\nEnter 'q' to quit program\n")
 
-	# Prompt user for all parameters
-	if select == 's':
-		left = raw_input("Left Time\n")
-		right = raw_input("Right Time\n")
-		forwards = raw_input("Forward Time\n")
-		upper = raw_input("Upper Obstacle Limit\n")
-		lower = raw_input("Lower Obstacle Limit\n")
-		run(left, right, forwards, upper, lower)
+	# Mode for third part
+	if select == 'a':
+		run(0.647, 0.658, 0.6, 500, 5)
 
-	# Uses default parameters
-	elif select == 'd':
+	# Mode for first two parts
+	elif select == 'r':
 		run()
 
 	# Ends the program
