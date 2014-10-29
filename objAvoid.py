@@ -33,16 +33,16 @@ class Guatmobile:
 	turntime = 0
 
 	# Move forward for set forwardTime
-	def bitForward(self):
-		forward(self.motorPower, self.forwardTime)
+	def bitForward(self, times = 1):
+		forward(times * self.motorPower, self.forwardTime)
 
 	# 90 degree left turn
 	def leftRight(self):
-		turnLeft(self.motorPower, self.leftTime)
+		self.turnLeftAngle(self, 90)
 
 	# 90 degree right turn
  	def rightRight(self):
-		turnRight(self.motorPower, self.rightTime)
+		self.turnRightAngle(self, 90)
 
 	# Functions to calculate how long it took to turn at the beginning
 	def startTime(self):
@@ -55,11 +55,22 @@ class Guatmobile:
 	# Check for wall on right of robot
 	def checkRight(self):
 		value = False
-		self.rightRight()
+		self.turnRightAngle(self, 45)
 		if getObstacle("center") > self.distanceUpper:
 			value = True
-		self.leftRight()
+			turnLeft(self.motorPower)
+			self.delayLeft()
+			turnLeft(robot.motorPower, 0.075)
+		else:
+			self.turnLeftAngle(self, 45)
 		return value
+
+	# Turns for a set angle in degrees
+	def turnRightAngle(self, angle):
+		turnRight(self.motorPower, self.rightTime / 90 * angle)
+
+	def turnLeftAngle(self, angle):
+		turnLeft(self.motorPower, self.leftTime / 90 * angle)
 
 	# Delaying functions
 	def delayForward(self):
