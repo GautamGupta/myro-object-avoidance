@@ -59,13 +59,16 @@ class Guatmobile:
 		value = False
 		self.turnRightAngle(90)
 		a = getObstacle("center")
-		if a <= 6400:
-			backward(self.motorPower, 0.02)
+		backward(self.motorPower, 0.2)
 		b = getObstacle("center")
-		if a >= b:
-			forward(self.motorPower, 0.04)
-		if getObstacle("center") > self.distanceUpper:
+		if a > b:
+			forward(self.motorPower, 0.5)
+		if getObstacle("center") > 0:
 			value = True
+		else:
+			forward(self.motorPower, 0.3)
+			if getObstacle("center") > 1000:
+				value = True
 		self.turnLeftAngle(90)
 		return value
 
@@ -118,7 +121,7 @@ def run(power = 1, left = 0.647, right = 0.658, forwards = 0.6, upper = 2000, up
 		print "Time of turn: {}".format(robot.endTime())
 	else:
 		robot.leftRight()
-		robot.turnTime = robot.leftTime - 0.3
+		robot.turnTime = robot.leftTime
 
 	# Extra turn for angled
 	if robot.distanceUpperFirst < 2000 and robot.motorPower != 1:
@@ -140,7 +143,7 @@ def run(power = 1, left = 0.647, right = 0.658, forwards = 0.6, upper = 2000, up
 
 	if robot.distanceUpperFirst > 2000:
 		robot.bitForward(robot.iterations + 2)
-	turnLeft(robot.motorPower, 2 * robot.leftTime - (robot.turnTime + 0.30))
+	turnLeft(robot.motorPower, 2 * robot.leftTime - (robot.turnTime))
 	robot.bitForward(4)
 	# Turn back to correct angle
 
@@ -154,7 +157,7 @@ while finished == 0:
 
 	# Mode for third part
 	if select == 'a':
-		run(0.5, 1.16, 1.18, 0.5, 5500, 1900, 5)
+		run(0.5, 1.16, 1.18, 0.5, 5500, 1000, 5)
 
 	# Mode for first two parts
 	elif select == 'r':
