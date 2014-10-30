@@ -24,7 +24,6 @@ class Guatmobile:
 	rightTime = 0.66
 	forwardTime = 0.5
 	distanceUpper = 2500
-	distanceUpperFirst = 2500
 	distanceLower = 5
 
 	# Logic Variables
@@ -73,7 +72,7 @@ class Guatmobile:
 	# Delaying functions
 	def delayForward(self):
 		while self.done == 0:
-			if getObstacle("center") > self.distanceUpperFirst:
+			if getObstacle("center") > self.distanceUpper:
 				self.done = 1
 		self.done = 0
 
@@ -86,7 +85,7 @@ class Guatmobile:
 # -------------------- Start of Run Sequence ----------------------
 
 # Main function that runs the sequence for the robot
-def run(power = 1, left = 0.647, right = 0.658, forwards = 0.6, upper = 2000, lower = 5, upperFirst = 2000):
+def run(power = 1, left = 0.647, right = 0.658, forwards = 0.6, upper = 2000, lower = 5):
 
 	# Initialize
 	robot = Guatmobile()
@@ -96,7 +95,6 @@ def run(power = 1, left = 0.647, right = 0.658, forwards = 0.6, upper = 2000, lo
 	robot.rightTime = right
 	robot.forwardTime = forwards
 	robot.distanceUpper = upper
-	robot.distanceUpperFirst = upperFirst
 	robot.distanceLower = lower
 
 	# Drive forward until detects wall
@@ -140,11 +138,11 @@ while finished == 0:
 
 	# Mode for third part
 	if select == 'a':
-		run(0.5, 1.2, 1.18, 0.5, 5500, 5, 5500)
+		run(0.5, 1.2, 1.18, 0.5, 5500, 5)
 
 	# Mode for first two parts
 	elif select == 'r':
-		run(0.5, 1.2, 1.18, 0.5, 5500, 5, 500)
+		run()
 
 	# Ends the program
 	elif select == 'q':
