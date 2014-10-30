@@ -4,7 +4,7 @@
 # 
 # Pranav Anand
 # Olivia Cao
-# Guatam Gupta
+# Gautam Gupta
 # Nakul Pathak
 # Ross Semenov
 # Wojciech Swiderski
@@ -16,7 +16,7 @@ from time import time
 init("/dev/tty.Fluke2-052F-Fluke2")
 
 # Robot class
-class Guatmobile:
+class Gautmobile:
 
 	# Setting parameter variables
 	motorPower = 0.5
@@ -87,7 +87,7 @@ class Guatmobile:
 def run(power = 1, left = 0.647, right = 0.658, forwards = 0.6, upper = 2000, lower = 5):
 
 	# Initialize
-	robot = Guatmobile()
+	robot = Gautmobile()
 
 	robot.motorPower = power
 	robot.leftTime = left
